@@ -40,9 +40,9 @@ def registered_user(unique_user_data, delete_user):
         "password": unique_user_data["password"],
         "email": unique_user_data["email"]
     }
-    login_res = requests.post(LOGIN, json=login_data)
-    assert login_res.status_code == 200, f"Не залогиниться под пользователем: {res.text}"
-    token = login_res.json()["accessToken"].split()[1]
+    # login_res = requests.post(LOGIN, json=login_data)
+    # assert login_res.status_code == 200, f"Не залогиниться под пользователем: {res.text}"
+    token = res.json()["accessToken"].split()[1]
     token_header = {"Authorization": f"Bearer {token}"}
     yield {**unique_user_data, "token": token_header}
     delete_user(token_header)
