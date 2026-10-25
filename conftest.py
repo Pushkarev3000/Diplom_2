@@ -36,12 +36,6 @@ def registered_user(unique_user_data, delete_user):
     """Регистрирует пользователя и возвращает его данные + токен"""
     res = requests.post(USER_REGISTER, json=unique_user_data)
     assert res.status_code == 200, f"Не удалось зарегистрировать пользователя: {res.text}"
-    login_data = {
-        "password": unique_user_data["password"],
-        "email": unique_user_data["email"]
-    }
-    # login_res = requests.post(LOGIN, json=login_data)
-    # assert login_res.status_code == 200, f"Не залогиниться под пользователем: {res.text}"
     token = res.json()["accessToken"].split()[1]
     token_header = {"Authorization": f"Bearer {token}"}
     yield {**unique_user_data, "token": token_header}
